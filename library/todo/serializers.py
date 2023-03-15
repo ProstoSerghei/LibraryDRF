@@ -2,10 +2,11 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 
 from .models import *
 
+
 class ProjectModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['url', 'name', 'repo_link', 'users', 'pk']
 
 
 class ToDoModelSerializer(HyperlinkedModelSerializer):
