@@ -53,15 +53,8 @@ const UserItem = ({ user }) => {
 };
 
 const UsersList = ({ users }) => {
-    if (users.length < 1) {
-        return (
-            <Spinner animation="border" role="status" className='spinner-table'>
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        )
-    }
     return (
-        <Table striped bordered hover variant="dark" >
+        <Table striped hover variant="dark" >
             <thead>
                 <tr>
                     <th>User name</th>

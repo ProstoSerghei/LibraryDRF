@@ -20,33 +20,35 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Navbar bg="dark" variant="dark" expand="lg">
-          <Container>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link as={NavLink} to="/">Users</Nav.Link>
-                <Nav.Link as={NavLink} to="/projects">Projects</Nav.Link>
-                <Nav.Link as={NavLink} to="/todos">Todos</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
+        <div className='main'>
+          <Navbar bg="dark" variant="dark" expand="lg">
+            <Container>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link as={NavLink} to="/">Users</Nav.Link>
+                  <Nav.Link as={NavLink} to="/projects">Projects</Nav.Link>
+                  <Nav.Link as={NavLink} to="/todos">Todos</Nav.Link>
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+          <Container fluid='md' className="content" style={{ padding: '0' }}>
+            <Routes>
+              <Route path='/' element={
+                <Users />
+              } />
+              <Route path='/projects' element={
+                <Projects />
+              } />
+              <Route path='/todos' element={
+                <Todos />
+              } />
+              <Route path='/projects/:pk' element={
+                <ProjectDetail />
+              } />
+            </Routes>
           </Container>
-        </Navbar>
-        <div className='content'>
-          <Routes>
-            <Route path='/' element={
-              <Users />
-            } />
-            <Route path='/projects' element={
-              <Projects />
-            } />
-            <Route path='/todos' element={
-              <Todos />
-            } />
-            <Route path='/projects/:pk' element={
-              <ProjectDetail />
-            } />
-          </Routes>
         </div>
       </BrowserRouter>
     )

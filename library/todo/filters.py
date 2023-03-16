@@ -12,8 +12,8 @@ class ProjectFilter(filters.FilterSet):
 
 
 class ToDoFilter(filters.FilterSet):
-    project = filters.ModelChoiceFilter(field_name='project__name', 
-                                        to_field_name='name', 
+    project = filters.ModelChoiceFilter(field_name='project__name',
+                                        to_field_name='name',
                                         queryset=Project.objects.all())
     created = filters.DateFromToRangeFilter()
 

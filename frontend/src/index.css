@@ -1,11 +1,17 @@
-.content {
-  margin: 10px auto;
-  width: 75vw;
-  min-height: 100%;
+.main {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.todo-desc {
-  max-width: 60%;
+.content {
+  background: #2c3034;
+  flex-grow: 1;
+  padding: 0;
+  color: #eee;
+}
+
+.project-detail-content {
+  padding: 30px;
+  box-sizing: border-box;
 }

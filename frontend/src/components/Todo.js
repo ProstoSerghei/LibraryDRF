@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import Spinner from 'react-bootstrap/Spinner';
 
 
 export default class Todos extends React.Component {
@@ -51,15 +50,8 @@ const TodosItem = ({ todo }) => {
 
 
 const TodosList = ({ todos }) => {
-    if (todos.length < 1) {
-        return (
-            <Spinner animation="border" role="status" className='spinner-table'>
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        )
-    }
     return (
-        <Table striped bordered hover variant="dark" >
+        <Table striped hover variant="dark" >
             <thead>
                 <tr>
                     <th>Author</th>

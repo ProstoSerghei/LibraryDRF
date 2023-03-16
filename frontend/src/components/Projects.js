@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import Spinner from 'react-bootstrap/Spinner';
 import Nav from 'react-bootstrap/Nav';
 
 import { NavLink } from 'react-router-dom';
@@ -52,7 +51,7 @@ const ProjectsItem = ({ project }) => {
                 </Nav>
             </td>
             <td>
-                <Nav variant="pills" defaultActiveKey={repoLink}>
+                <Nav variant="">
                     <Nav.Item>
                         <Nav.Link href={repoLink} target='_blank' className={!repoLink && 'disabled'} >Репозиторий</Nav.Link>
                     </Nav.Item>
@@ -67,15 +66,8 @@ const ProjectsItem = ({ project }) => {
 
 
 const ProjectsList = ({ projects }) => {
-    if (projects.length < 1) {
-        return (
-            <Spinner animation="border" role="status" className='spinner-table'>
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        )
-    }
     return (
-        <Table striped bordered hover variant="dark" >
+        <Table striped hover variant="dark" >
             <thead>
                 <tr>
                     <th>Name</th>
