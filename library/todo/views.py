@@ -39,8 +39,3 @@ class ToDoModelViewSet(ModelViewSet):
         serializer = self.get_serializer(instance)
 
         return Response(serializer.data)
-
-
-# модель ToDo: доступны все варианты запросов; при удалении не удалять ToDo, а
-# выставлять признак, что оно закрыто; добавить фильтрацию по проекту; для
-# постраничного вывода установить размер страницы 20
