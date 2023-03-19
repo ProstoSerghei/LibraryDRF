@@ -10,7 +10,7 @@ from .filters import *
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 1
+    default_limit = 10
 
 
 class ToDoLimitOffsetPagination(LimitOffsetPagination):
@@ -22,7 +22,6 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
-
 
 
 class ToDoModelViewSet(ModelViewSet):
@@ -40,8 +39,6 @@ class ToDoModelViewSet(ModelViewSet):
         serializer = self.get_serializer(instance)
 
         return Response(serializer.data)
-        
-
 
 
 # модель ToDo: доступны все варианты запросов; при удалении не удалять ToDo, а
