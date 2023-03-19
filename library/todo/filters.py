@@ -17,7 +17,6 @@ class ToDoFilter(filters.FilterSet):
                                         queryset=Project.objects.all())
     created = filters.DateFromToRangeFilter()
 
-
     class Meta:
         model = ToDo
         fields = ['project', 'created']
