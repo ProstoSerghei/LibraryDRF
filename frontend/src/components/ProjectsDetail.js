@@ -18,12 +18,14 @@ class ProjectDetailPk extends React.Component {
         this.state = {
             'data': [],
             'users': [],
-            'todos': []
+            'todos': [],
+            'headers': this.props.headers
         }
     }
 
     componentDidMount() {
-        axios.get(this.apiUrl)
+        const headers = this.state.headers;
+        axios.get(this.apiUrl, { headers })
             .then(response => {
                 const data = response.data;
                 this.setState({
@@ -36,7 +38,7 @@ class ProjectDetailPk extends React.Component {
                 let usersLength = response.users.length;
                 let projectName = response.name;
                 response.users.forEach((user) => {
-                    axios.get(user)
+                    axios.get(user, { headers })
                         .then(response => {
                             const data = response.data;
                             users.push({ 'name': `${data.firstName} ${data.lastName}`, 'pk': data.pk });
@@ -50,7 +52,7 @@ class ProjectDetailPk extends React.Component {
                         }).catch(error => console.log(error))
                 });
 
-                axios.get('http://127.0.0.1:8000/api/todo/?project=' + projectName)
+                axios.get('http://127.0.0.1:8000/api/todo/?project=' + projectName, { headers })
                     .then(response => {
                         return response.data.results;
                     })
@@ -58,7 +60,7 @@ class ProjectDetailPk extends React.Component {
                         let todosLength = response.length;
                         let totalData = [];
                         response.forEach(todo => {
-                            axios.get(todo.user)
+                            axios.get(todo.user, { headers })
                                 .then(response => {
                                     todo.userName = response.data.userName;
                                     totalData.push(todo);
@@ -127,9 +129,10 @@ const ProjectTodosList = ({ todo }) => {
     );
 }
 
-export default function ProjectDetail() {
+export default function ProjectDetail(props) {
     const { pk } = useParams();
+    const headers = props.get_headers();
     return (
-        <ProjectDetailPk pk={pk} />
+        <ProjectDetailPk headers={headers} pk={pk} />
     );
 }

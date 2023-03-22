@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from rest_framework.viewsets import mixins, GenericViewSet
+from rest_framework import permissions
 
 
 from .models import User
