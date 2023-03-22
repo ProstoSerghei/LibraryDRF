@@ -10,12 +10,14 @@ export default class Projects extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'projects': []
+            'projects': [],
+            'headers': this.props.get_headers()
         };
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/projects/')
+        const headers = this.state.headers;
+        axios.get('http://127.0.0.1:8000/api/projects/', { headers })
             .then(response => {
                 const projects = response.data.results;
                 this.setState(
@@ -28,14 +30,14 @@ export default class Projects extends React.Component {
 
     render() {
         return (
-            <ProjectsList projects={this.state.projects} />
+            <ProjectsList headers={this.state.headers} projects={this.state.projects} />
         );
     }
 
 }
 
 
-const ProjectsItem = ({ project }) => {
+const ProjectsItem = ({ project, headers }) => {
     let repoLink = ''
     if (project.repoLink.includes('http')) {
         repoLink = project.repoLink;
@@ -58,14 +60,14 @@ const ProjectsItem = ({ project }) => {
                 </Nav>
             </td>
             <td>
-                {project.users.map((url) => <GetUser key={url} url={url} />)}
+                {project.users.map((url) => <GetUser headers={headers} key={url} url={url} />)}
             </td>
         </tr>
     );
 };
 
 
-const ProjectsList = ({ projects }) => {
+const ProjectsList = ({ projects, headers }) => {
     return (
         <Table striped hover variant="dark" >
             <thead>
@@ -76,7 +78,7 @@ const ProjectsList = ({ projects }) => {
                 </tr>
             </thead>
             <tbody>
-                {projects.map((project) => <ProjectsItem key={project.url} project={project} />)}
+                {projects.map((project) => <ProjectsItem headers={headers} key={project.url} project={project} />)}
             </tbody>
         </Table>
     );
@@ -92,8 +94,8 @@ class GetUser extends React.Component {
     }
 
     componentDidMount() {
-
-        axios.get(this.state.url)
+        const headers = this.props.headers;
+        axios.get(this.state.url, { headers })
             .then(response => {
                 const userName = response.data.userName;
                 this.setState(

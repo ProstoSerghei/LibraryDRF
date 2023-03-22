@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import Spinner from 'react-bootstrap/Spinner';
 
 
 export default class Users extends React.Component {
@@ -13,15 +12,16 @@ export default class Users extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/users/')
+        const headers = this.props.get_headers();
+        axios.get('http://127.0.0.1:8000/api/users/', { headers })
             .then(response => {
-                const users = response.data.results;
+                const users = response.data;
                 this.setState(
                     {
-                        'users': users,
+                        'users': users.results,
                     }
                 )
-            }).catch(error => console.log(error))
+            }).catch(error => console.log(error.response.data.detail))
     }
 
     render() {
@@ -69,3 +69,5 @@ const UsersList = ({ users }) => {
         </Table>
     );
 };
+
+

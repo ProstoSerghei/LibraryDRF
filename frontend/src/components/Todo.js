@@ -7,12 +7,13 @@ export default class Todos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'todos': []
+            'todos': [],
+            'headers': this.props.get_headers()
         };
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/todo/')
+        axios.get('http://127.0.0.1:8000/api/todo/', { 'headers': this.state.headers })
             .then(response => {
                 const todos = response.data.results;
                 this.setState(
@@ -25,31 +26,31 @@ export default class Todos extends React.Component {
 
     render() {
         return (
-            <TodosList todos={this.state.todos} />
+            <TodosList headers={this.state.headers} todos={this.state.todos} />
         );
     }
 
 }
 
 
-const TodosItem = ({ todo }) => {
+const TodosItem = ({ todo, headers }) => {
     return (
         <tr>
             <td>
-                <GetData user={todo.user} />
+                <GetData headers={headers} user={todo.user} />
             </td>
             <td>
                 {todo.text}
             </td>
             <td>
-                <GetData project={todo.project} />
+                <GetData headers={headers} project={todo.project} />
             </td>
         </tr>
     );
 };
 
 
-const TodosList = ({ todos }) => {
+const TodosList = ({ todos, headers }) => {
     return (
         <Table striped hover variant="dark" >
             <thead>
@@ -60,7 +61,7 @@ const TodosList = ({ todos }) => {
                 </tr>
             </thead>
             <tbody>
-                {todos.map((todo) => <TodosItem key={todo.url} todo={todo} />)}
+                {todos.map((todo) => <TodosItem headers={headers} key={todo.url} todo={todo} />)}
             </tbody>
         </Table>
     );
@@ -79,6 +80,7 @@ class GetData extends React.Component {
     componentDidMount() {
         let url = '';
         let field = '';
+        const headers = this.props.headers;
         if (this.projectUrl) {
             url = this.projectUrl;
             field = 'name'
@@ -86,7 +88,7 @@ class GetData extends React.Component {
             url = this.userUrl;
             field = 'userName'
         }
-        axios.get(url)
+        axios.get(url, { headers })
             .then(response => {
                 const data = response.data;
                 this.setState(
