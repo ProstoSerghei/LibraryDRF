@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework.viewsets import mixins, GenericViewSet
-from rest_framework import permissions
+from rest_framework.viewsets import ModelViewSet
 
 
 from .models import User
@@ -9,10 +8,7 @@ from .serializers import UserModelSerializer
 # Create your views here.
 
 
-class UserModelViewSet(mixins.RetrieveModelMixin,
-                   mixins.UpdateModelMixin,
-                   mixins.ListModelMixin,
-                   GenericViewSet):
+class UserModelViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
