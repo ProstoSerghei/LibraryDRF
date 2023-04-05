@@ -14,6 +14,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -65,6 +66,13 @@ class App extends React.Component {
     this.get_token_from_storage();
   }
 
+  deleteItem(url, headers) {
+    axios.delete(url, { headers })
+      .then(response => {
+        console.log(response);
+      })
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -90,10 +98,10 @@ class App extends React.Component {
                 this.is_authenticated() ? <NotFound404 /> : <Users get_headers={() => this.get_headers()} />
               } />
               <Route path='/projects' element={
-                this.is_authenticated() ? <NotFound404 /> : <Projects get_headers={() => this.get_headers()} />
+                this.is_authenticated() ? <NotFound404 /> : <Projects deleteItem={(url, headers) => this.deleteItem(url, headers)} get_headers={() => this.get_headers()} />
               } />
               <Route path='/todos' element={
-                this.is_authenticated() ? <NotFound404 /> : <Todos get_headers={() => this.get_headers()} />
+                this.is_authenticated() ? <NotFound404 /> : <Todos deleteItem={(url, headers) => this.deleteItem(url, headers)} get_headers={() => this.get_headers()} />
               } />
               <Route path='/projects/:pk' element={
                 this.is_authenticated() ? <NotFound404 /> : <ProjectDetail get_headers={() => this.get_headers()} />

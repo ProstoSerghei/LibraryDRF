@@ -12,4 +12,5 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
 class ToDoModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = ToDo
-        fields = '__all__'
+        fields = ['url', 'text', 'created', 'updated',
+                  'project', 'user', 'pk']
