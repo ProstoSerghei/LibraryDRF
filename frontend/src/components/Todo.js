@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 
 export default class Todos extends React.Component {
@@ -26,16 +27,17 @@ export default class Todos extends React.Component {
 
     render() {
         return (
-            <TodosList headers={this.state.headers} todos={this.state.todos} />
+            <TodosList deleteItem={(url, headers) => this.props.deleteItem(url, headers)} headers={this.state.headers} todos={this.state.todos} />
         );
     }
 
 }
 
 
-const TodosItem = ({ todo, headers }) => {
+const TodosItem = ({ todo, headers, deleteItem }) => {
+    const url = `http://127.0.0.1:8000/api/todo/${todo.pk}`
     return (
-        <tr>
+        <tr className={`todoRow${todo.pk}`}>
             <td>
                 <GetData headers={headers} user={todo.user} />
             </td>
@@ -45,12 +47,15 @@ const TodosItem = ({ todo, headers }) => {
             <td>
                 <GetData headers={headers} project={todo.project} />
             </td>
+            <td>
+                <Button style={{ margin: '5px' }} variant="danger" onClick={() => { deleteItem(url, headers); hideItem(todo.pk) }}>Delete</Button>
+            </td>
         </tr>
     );
 };
 
 
-const TodosList = ({ todos, headers }) => {
+const TodosList = ({ todos, headers, deleteItem }) => {
     return (
         <Table striped hover variant="dark" >
             <thead>
@@ -58,10 +63,11 @@ const TodosList = ({ todos, headers }) => {
                     <th>Author</th>
                     <th>Description</th>
                     <th>Project</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {todos.map((todo) => <TodosItem headers={headers} key={todo.url} todo={todo} />)}
+                {todos.map((todo) => <TodosItem deleteItem={(url, headers) => deleteItem(url, headers)} headers={headers} key={todo.url} todo={todo} />)}
             </tbody>
         </Table>
     );
@@ -105,4 +111,8 @@ class GetData extends React.Component {
         );
     }
 
+}
+
+function hideItem(elId) {
+    document.querySelector(`.todoRow${elId}`).style.display = 'none';
 }

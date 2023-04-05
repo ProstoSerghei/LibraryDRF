@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-
+import Modal from 'react-bootstrap/Modal';
+import TodoForm from "./TodoForm";
 
 class ProjectDetailPk extends React.Component {
 
@@ -19,11 +20,12 @@ class ProjectDetailPk extends React.Component {
             'data': [],
             'users': [],
             'todos': [],
-            'headers': this.props.headers
+            'headers': this.props.headers,
+            'show': false
         }
     }
 
-    componentDidMount() {
+    fetchData() {
         const headers = this.state.headers;
         axios.get(this.apiUrl, { headers })
             .then(response => {
@@ -74,6 +76,10 @@ class ProjectDetailPk extends React.Component {
                         })
                     })
             }).catch(error => console.log(error))
+    }
+
+    componentDidMount() {
+        this.fetchData();
 
     }
 
@@ -91,11 +97,24 @@ class ProjectDetailPk extends React.Component {
                 </Row>
                 <Row style={{ textAlign: 'center', marginTop: '20px' }} className="justify-content-md-center">
                     <Col>
-                        <h3>{todos.length > 1 ? 'Заметки проекта' : ''}</h3>
+                        <h3>{todos.length > 0 ? 'Заметки проекта' : ''}</h3>
                     </Col>
                 </Row>
                 <Row style={{ marginTop: '20px' }} className="justify-content-md-center">
-                    {todos.map(todo => (<Col key={todo.url} md="auto"><ProjectTodosList todo={todo} /></Col>))}
+                    {todos.map(todo => (<Col style={{ marginBottom: '20px' }} key={todo.url} md="auto"><ProjectTodosList todo={todo} /></Col>))}
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col md={2} >
+                        <Modal show={this.state.show} onHide={() => this.setState({ show: false })}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Добавить заметку</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <TodoForm projectId={data.pk} userId={46} projectName={data.name} headers={this.state.headers} parent={this} />
+                            </Modal.Body>
+                        </Modal>
+                        <Button variant="success" style={{ display: 'block', margin: '0 auto' }} onClick={() => this.setState({ show: true })}>Добавить заметку</Button>
+                    </Col>
                 </Row>
                 <Row style={{ marginTop: '40px' }} className="justify-content-md-center">
                     <Col xl="auto">
@@ -118,7 +137,7 @@ class ProjectDetailPk extends React.Component {
 
 const ProjectTodosList = ({ todo }) => {
     return (
-        <Card bg='dark' style={{ width: '18rem', minHeight: '200px', margin: '0 auto 20px' }}>
+        <Card bg='dark' style={{ width: '18rem', minHeight: '200px', height: '100%', margin: '0 auto' }}>
             <Card.Body>
                 <Card.Title>Автор: {todo.userName}</Card.Title>
                 <Card.Text>
