@@ -8,6 +8,11 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios";
 
 
+
+
+
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class ProjectForm extends React.Component {
     constructor(props) {
         super(props);
@@ -34,10 +39,10 @@ export default class ProjectForm extends React.Component {
         const data = {
             name: this.state.name,
             repo_link: this.state.repo_link,
-            users: [`http://127.0.0.1:8000/api/users/${this.state.users}/`]
+            users: [`${baseUrl}/api/users/${this.state.users}/`]
         };
         const headers = this.state.headers;
-        axios.post(`http://127.0.0.1:8000/api/projects/`, data, { headers })
+        axios.post(`${baseUrl}http://127.0.0.1:8000/api/projects/`, data, { headers })
             .then((response) => {
                 this.state.parent.fetchData();
             })

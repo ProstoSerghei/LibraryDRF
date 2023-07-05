@@ -8,6 +8,10 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios";
 
 
+
+
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class TodoForm extends React.Component {
     constructor(props) {
         super(props);
@@ -32,11 +36,11 @@ export default class TodoForm extends React.Component {
     handleSubmit(event) {
         const data = {
             text: this.state.desc,
-            project: `http://127.0.0.1:8000/api/projects/${this.state.projectId}/`,
-            user: `http://127.0.0.1:8000/api/users/${this.state.userId}/`
+            project: `${baseUrl}/api/projects/${this.state.projectId}/`,
+            user: `${baseUrl}/api/users/${this.state.userId}/`
         };
         const headers = this.state.headers;
-        axios.post(`http://127.0.0.1:8000/api/todo/`, data, { headers })
+        axios.post(`${baseUrl}/api/todo/`, data, { headers })
             .then((response) => {
                 this.state.parent.fetchData();
             })

@@ -4,6 +4,8 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
 
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class Todos extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,7 @@ export default class Todos extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/todo/', { 'headers': this.state.headers })
+        axios.get(baseUrl + '/api/todo/', { 'headers': this.state.headers })
             .then(response => {
                 const todos = response.data.results;
                 this.setState(
@@ -35,7 +37,7 @@ export default class Todos extends React.Component {
 
 
 const TodosItem = ({ todo, headers, deleteItem }) => {
-    const url = `http://127.0.0.1:8000/api/todo/${todo.pk}`
+    const url = `${baseUrl}/api/todo/${todo.pk}`
     return (
         <tr className={`todoRow${todo.pk}`}>
             <td>

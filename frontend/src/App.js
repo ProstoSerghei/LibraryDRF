@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+
 
 import Users from './components/Users.js';
 import Projects from './components/Projects.js';
@@ -14,6 +15,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 
+const baseUrl = 'http://127.0.0.1:8000';
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +48,7 @@ class App extends React.Component {
   }
 
   get_token(username, password) {
-    axios.post('http://127.0.0.1:8000/api-token-auth', { username: username, password: password })
+    axios.post(baseUrl + '/api-token-auth', { username: username, password: password })
       .then(response => {
         this.set_token(response.data['token']);
       }).catch(error => alert('Что-то пошло не так(\nПроверьте данные авторизации.'))
@@ -121,9 +123,7 @@ class App extends React.Component {
 
 const NotFound404 = () => {
   return (
-    <div>
-      <h1>Страница не найдена</h1>
-    </div>
+    <Navigate to='/auth' replace />
   )
 }
 

@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class LoginForm extends React.Component {
     constructor(props) {
         super(props);

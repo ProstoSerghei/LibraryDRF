@@ -3,6 +3,9 @@ import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 
 
+
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class Users extends React.Component {
     constructor(props) {
         super(props);
@@ -13,7 +16,7 @@ export default class Users extends React.Component {
 
     componentDidMount() {
         const headers = this.props.get_headers();
-        axios.get('http://127.0.0.1:8000/api/users/', { headers })
+        axios.get(baseUrl + '/api/users/', { headers })
             .then(response => {
                 const users = response.data;
                 this.setState(
@@ -39,10 +42,10 @@ const UserItem = ({ user }) => {
             <td>
                 {user.userName}
             </td>
-            <td>
+            <td className='firstName'>
                 {user.firstName}
             </td>
-            <td>
+            <td className='lastName'>
                 {user.lastName}
             </td>
             <td>
@@ -58,8 +61,8 @@ const UsersList = ({ users }) => {
             <thead>
                 <tr>
                     <th>User name</th>
-                    <th>First name</th>
-                    <th>Last name</th>
+                    <th className='firstName'>First name</th>
+                    <th className='lastName'>Last name</th>
                     <th>Email</th>
                 </tr>
             </thead>

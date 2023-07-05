@@ -10,12 +10,17 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import TodoForm from "./TodoForm";
 
+
+
+
+const baseUrl = 'http://127.0.0.1:8000';
+
 class ProjectDetailPk extends React.Component {
 
     constructor(props) {
         super(props);
         this.pk = props.pk;
-        this.apiUrl = 'http://127.0.0.1:8000/api/projects/' + this.pk;
+        this.apiUrl = baseUrl + '/api/projects/' + this.pk;
         this.state = {
             'data': [],
             'users': [],
@@ -54,7 +59,7 @@ class ProjectDetailPk extends React.Component {
                         }).catch(error => console.log(error))
                 });
 
-                axios.get('http://127.0.0.1:8000/api/todo/?project=' + projectName, { headers })
+                axios.get(baseUrl + '/api/todo/?project=' + projectName, { headers })
                     .then(response => {
                         return response.data.results;
                     })

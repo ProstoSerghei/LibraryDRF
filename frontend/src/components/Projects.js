@@ -9,6 +9,8 @@ import Form from 'react-bootstrap/Form'
 import { NavLink } from 'react-router-dom';
 
 
+const baseUrl = 'http://127.0.0.1:8000';
+
 export default class Projects extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +24,7 @@ export default class Projects extends React.Component {
 
     fetchData() {
         const headers = this.state.headers;
-        axios.get('http://127.0.0.1:8000/api/projects/', { headers })
+        axios.get(baseUrl + '/api/projects/', { headers })
             .then(response => {
                 const projects = response.data.results;
                 this.setState(
@@ -39,7 +41,7 @@ export default class Projects extends React.Component {
 
     searchGet() {
         const headers = this.state.headers;
-        axios.get(`http://127.0.0.1:8000/api/projects/?name=${this.state.search}`, { headers })
+        axios.get(`${baseUrl}/api/projects/?name=${this.state.search}`, { headers })
             .then(response => {
                 const projects = response.data.results;
                 this.setState(
@@ -95,7 +97,7 @@ export default class Projects extends React.Component {
 
 
 const ProjectsItem = ({ project, headers, deleteItem }) => {
-    const url = `http://127.0.0.1:8000/api/projects/${project.pk}`
+    const url = `${baseUrl}/api/projects/${project.pk}`
     let repoLink = ''
     if (project.repoLink.includes('http')) {
         repoLink = project.repoLink;
