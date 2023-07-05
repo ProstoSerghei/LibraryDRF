@@ -11,7 +11,7 @@ import axios from "axios";
 
 
 
-const baseUrl = 'http://127.0.0.1:8000';
+const baseUrl = 'https://drf-server.onrender.com';
 
 export default class ProjectForm extends React.Component {
     constructor(props) {
@@ -42,7 +42,7 @@ export default class ProjectForm extends React.Component {
             users: [`${baseUrl}/api/users/${this.state.users}/`]
         };
         const headers = this.state.headers;
-        axios.post(`${baseUrl}http://127.0.0.1:8000/api/projects/`, data, { headers })
+        axios.post(`${baseUrl}/api/projects/`, data, { headers })
             .then((response) => {
                 this.state.parent.fetchData();
             })

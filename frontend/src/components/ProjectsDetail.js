@@ -13,7 +13,7 @@ import TodoForm from "./TodoForm";
 
 
 
-const baseUrl = 'http://127.0.0.1:8000';
+const baseUrl = 'https://drf-server.onrender.com';
 
 class ProjectDetailPk extends React.Component {
 
