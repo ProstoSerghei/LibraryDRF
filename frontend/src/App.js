@@ -15,7 +15,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 
-const baseUrl = 'https://drf-server.onrender.com/';
+const baseUrl = 'https://drf-server.onrender.com';
 
 class App extends React.Component {
   constructor(props) {
